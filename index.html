@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seafarer Training Portal - DEMO VERSION</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #0f172a; 
+            color: #f8fafc; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        
+        .card { 
+            background-color: #1e293b; 
+            padding: 30px; 
+            border-radius: 12px; 
+            width: 100%; 
+            max-width: 1100px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5); 
+        }
+        
+        .hidden { display: none !important; }
+        h1, h2, h3 { color: #38bdf8; margin-bottom: 15px; }
+        p { margin-bottom: 15px; line-height: 1.6; color: #cbd5e1; }
+        
+        .portal-header { text-align: center; margin-bottom: 20px; }
+        .portal-header img { max-width: 100%; height: auto; max-height: 220px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 15px; }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .form-wrapper {
+            width: 100%;
+            height: 750px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+        }
+
+        .form-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .drive-shield {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background: transparent;
+            z-index: 10;
+        }
+
+        .external-link-btn {
+            display: inline-block;
+            background-color: #334155;
+            color: #38bdf8;
+            border: 1px solid #38bdf8;
+            padding: 10px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 15px;
+            transition: 0.2s;
+        }
+        .external-link-btn:hover {
+            background-color: #38bdf8;
+            color: #0f172a;
+        }
+
+        .btn { 
+            background-color: #0284c7; 
+            color: white; 
+            border: none; 
+            padding: 14px 24px; 
+            font-size: 16px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: 0.2s; 
+            width: 100%; 
+        }
+        .btn:disabled { background-color: #475569; cursor: not-allowed; opacity: 0.7; }
+        .btn:hover:not(:disabled) { background-color: #0369a1; }
+
+        .btn-back {
+            background-color: #475569;
+            width: auto;
+            margin-bottom: 20px;
+            padding: 10px 18px;
+            font-size: 14px;
+        }
+        .btn-back:hover:not(:disabled) { background-color: #64748b; }
+        
+        .course-grid { display: flex; gap: 20px; }
+        .course-card { flex: 1; padding: 30px; background-color: #334155; border-radius: 8px; text-align: center; cursor: pointer; border: 2px solid transparent; }
+        .course-card:hover { border-color: #38bdf8; }
+        
+        .hub-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+        .hub-item { background-color: #334155; padding: 15px; border-radius: 8px; cursor: pointer; border: 1px solid #475569; transition: 0.2s; font-weight: bold; text-align: left; color: white;}
+        .hub-item:hover { border-color: #38bdf8; background-color: #1e293b; }
+        .hub-item.guidelines-item { background-color: #0f766e; border-color: #115e59; }
+        .hub-item.guidelines-item:hover { background-color: #115e59; }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        @media (max-width: 600px) {
+            .action-buttons { flex-direction: column; }
+        }
+
+        .demo-badge {
+            background-color: #ef4444;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="portal-header">
+        <div class="demo-badge">DEMO MODE ACTIVE (Timers & Assessment Unlocked)</div><br>
+        <img src="Bellfranc.jpg" alt="Bellfranc Training Portal Header" onerror="this.style.display='none'">
+        <h1>Seafarer Training Portal</h1>
+    </div>
+
+    <!-- ACCESS EXPIRED CARD -->
+    <div id="step-expired" class="card hidden" style="text-align: center;">
+        <h2 style="color: #ef4444;">Access Expired</h2>
+        <p>This training link is no longer active because the course was already completed or your 10-day validity period has passed.</p>
+    </div>
+
+    <!-- STEP 0: Introduction Video -->
+    <div id="step-intro" class="card">
+        <h2>Welcome to Bellfranc Training</h2>
+        <p>Please watch the introductory video below before proceeding to seafarer registration.</p>
+        
+        <div class="video-wrapper">
+            <div class="drive-shield"></div>
+            <iframe id="introFrame" src="https://drive.google.com/file/d/1cSe0VSYngrD5ktSZF7lzrg9roOJu32UN/preview" allow="autoplay"></iframe>
+        </div>
+
+        <button id="introBtn" class="btn" disabled onclick="finishIntro()">Please watch introductory video...</button>
+    </div>
+
+    <!-- STEP 1: Registration Google Form -->
+    <div id="step-registration" class="card hidden">
+        <h2>Seafarer Registration</h2>
+        <p>Please complete registration form below before starting the training module or your training will not be recorded.</p>
+
+        <div style="text-align: center;">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd3bNL3etxaJdmzdB18IYU5bxsCQ2GfV-gsB2wsez50HfTyng/viewform" target="_blank" class="external-link-btn">
+                ↗ Open Registration Form in New Window (If not loading)
+            </a>
+        </div>
+
+        <div class="form-wrapper">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd3bNL3etxaJdmzdB18IYU5bxsCQ2GfV-gsB2wsez50HfTyng/viewform?embedded=true">Loading…</iframe>
+        </div>
+
+        <button class="btn" onclick="handleRegistration()">Proceed to Course Selection</button>
+    </div>
+
+    <!-- STEP 2: Course Selection -->
+    <div id="step-course-select" class="card hidden">
+        <h2>Select Training Course</h2>
+        <div class="course-grid">
+            <div class="course-card" onclick="selectCourse('Cyber Security')">
+                <h3>Cyber Security</h3>
+                <p>7 Training Videos + 1 Guidelines Document</p>
+            </div>
+            <div class="course-card" onclick="selectCourse('Rightship Inspection')">
+                <h3>Rightship Inspection</h3>
+                <p>6 Training Videos + 1 Guidelines Document</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 2.5: Course Hub (Selection Menu) -->
+    <div id="step-course-hub" class="card hidden">
+        <button class="btn btn-back" onclick="backToCourseSelect()">← Back to Course Selection</button>
+        <h2 id="hubTitle">Course Content</h2>
+        <p>Select a video or Guidelines documents to review. You must complete viewing all videos and spend atleast one hour viewing the training Guidelines documents in order to complete the training courses, Do not attempt to fast forward the video.</p>
+        
+        <div id="hubList" class="hub-list">
+            <!-- Dynamic Content Injected Here -->
+        </div>
+
+        <hr style="border: 1px solid #334155; margin-bottom: 20px;">
+        
+        <p style="font-size: 14px;">Only once you have completed watching all the videos and spend one hour reading the guideline, you will be able to do the assessment.</p>
+        <button id="proceedAssessmentBtn" class="btn" onclick="unlockAssessment()">Proceed to Final Assessment →</button>
+    </div>
+
+    <!-- STEP 3: Individual Video Player -->
+    <div id="step-videos" class="card hidden">
+        <button class="btn btn-back" onclick="backToHub()">← Back to Content Menu</button>
+        <h2 id="videoTitle">Video</h2>
+        
+        <div class="video-wrapper">
+            <div class="drive-shield"></div>
+            <iframe id="driveFrame" src="" allow="autoplay"></iframe>
+        </div>
+
+        <button id="videoDoneBtn" class="btn" disabled onclick="backToHub()">Please watch video...</button>
+    </div>
+
+    <!-- STEP 4: Guidelines Document -->
+    <div id="step-guidelines" class="card hidden">
+        <button class="btn btn-back" onclick="backToHub()">← Back to Content Menu</button>
+        <h2>Course Guidelines & Code of Practice</h2>
+        <p>Please review the complete guidelines below. You must spent at least 1 hour viewing this document.</p>
+        
+        <div class="video-wrapper" style="padding-top: 70%;">
+            <div class="drive-shield"></div>
+            <iframe id="guidelinesFrame" src="" allow="autoplay"></iframe>
+        </div>
+
+        <button id="guidelinesBtn" class="btn" disabled onclick="backToHub()">Please read guidelines (60:00 remaining)...</button>
+    </div>
+
+    <!-- STEP 5: Assessment Google Form -->
+    <div id="step-assessment" class="card hidden">
+        <h2 id="assessmentTitle">Final Assessment</h2>
+        <p>Please complete the assessment below. <strong>You must score at least 70% to pass.</strong> Once submitted, click "View Score". If your score is below 21, you must retake the test.</p>
+
+        <div style="text-align: center;">
+            <a id="assessmentFallbackLink" href="#" target="_blank" class="external-link-btn">
+                ↗ Open Assessment Form in New Window (If not loading)
+            </a>
+        </div>
+
+        <div class="form-wrapper">
+            <iframe id="assessmentFrame" src="">Loading…</iframe>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn" style="background-color: #ef4444;" onclick="handleFail()">I Scored Below 21 (Retake Test)</button>
+            <button class="btn" style="background-color: #166534;" onclick="completeTraining()">I Scored 21+ → Finish Course</button>
+        </div>
+    </div>
+
+    <!-- STEP 5.5: DEDICATED RETAKE PAGE -->
+    <div id="step-retake" class="card hidden" style="text-align: center;">
+        <h2 style="color: #ef4444;">Assessment Failed</h2>
+        <p>You did not meet the minimum required score of 21 to pass this course.</p>
+        <p>You must retake the assessment to complete your training successfully. You may jump straight into the retake, or return to the course content to review the materials again.</p>
+        
+        <br>
+        <button class="btn" style="background-color: #0284c7; margin-bottom: 15px;" onclick="retakeAssessment()">↺ Start Retake Now</button>
+        <button class="btn btn-back" onclick="backToCourseHubFromRetake()">← Return to Course Content Menu</button>
+    </div>
+
+    <!-- STEP 6: Completion Screen -->
+    <div id="step-complete" class="card hidden">
+        <h2>Assessment Completed!</h2>
+        <p>Thank you for completing the training course and assessment. Your passing score and training record have been successfully submitted and saved.</p>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // DEMO OVERRIDE: Clear local storage on load so it never locks you out during a demo
+            localStorage.clear(); 
+            startIntroTimer();
+        };
+
+        let selectedCourse = '';
+        let timerInterval = null;
+        let introTimer = null;
+        let guidelinesTimer = null;
+        let assessmentStartTime = 0;
+        
+        // Tracking Completion State
+        let completedVideos = [];
+        let guidelinesCompleted = false;
+        let currentPlayingIndex = -1;
+
+        // DEMO OVERRIDE: Intro set to 0 seconds
+        const introDuration = 0; 
+
+        function startIntroTimer() {
+            let secondsRemaining = introDuration;
+            const btn = document.getElementById('introBtn');
+            btn.disabled = true;
+
+            introTimer = setInterval(() => {
+                secondsRemaining--;
+
+                if (secondsRemaining <= 0) {
+                    clearInterval(introTimer);
+                    btn.disabled = false;
+                    btn.innerText = "Proceed to Registration →";
+                } else {
+                    const mins = Math.floor(secondsRemaining / 60);
+                    const secs = secondsRemaining % 60;
+                    const timeFormatted = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                    btn.innerText = `Watch intro video to proceed (${timeFormatted} remaining)...`;
+                }
+            }, 100); // DEMO OVERRIDE: Fast interval
+        }
+
+        function finishIntro() {
+            document.getElementById('step-intro').classList.add('hidden');
+            document.getElementById('step-registration').classList.remove('hidden');
+        }
+
+        const driveVideos = {
+            'Cyber Security': [
+                "https://drive.google.com/file/d/1dES7G6RNz7aRZQSoFMLtVBqxEtvoFBbh/preview",
+                "https://drive.google.com/file/d/1hAhTBhrN95-UsHA-XpLrw8MQp85PREEF/preview",
+                "https://drive.google.com/file/d/1JzpeToh7nByjIWsR1vzN64Yo9eRcQWzn/preview",
+                "https://drive.google.com/file/d/1cNtLFxZQnwDWXqkpN1xCBCJySYRryDLV/preview",
+                "https://drive.google.com/file/d/16t5tG2c3Xt8Et6jToJ7PXFTvufxJGxHJ/preview",
+                "https://drive.google.com/file/d/1P4KcLF_PRWCyDAQ7MEaGNiFsaIURlGcx/preview",
+                "https://drive.google.com/file/d/1wwsMwNC1Xym0iigRJ8wAr9YgyS_Jt74y/preview"
+            ],
+            'Rightship Inspection': [
+                "https://drive.google.com/file/d/1nEL8Z86VSEMLlYLGU_5WVuA-s6RLJ7IU/preview",
+                "https://drive.google.com/file/d/1a_h1c-EzaD6MxVhf9t8xww9SoU1XHMs8/preview",
+                "https://drive.google.com/file/d/1AZJTuhkL5KWeiib3Lk3eDPIDFGhd4hkI/preview",
+                "https://drive.google.com/file/d/1L-FpGr4MFe4fPxp5mAAJCUnPbe3E7Y9g/preview",
+                "https://drive.google.com/file/d/1ZuclJFfmbQyLoiAUSK3fy9pOXpoyPFVP/preview",
+                "https://drive.google.com/file/d/1xXUOUfptqxJUIncKZAz69GPjUbkmnqcY/preview"
+            ]
+        };
+
+        const driveGuidelines = {
+            'Cyber Security': "https://drive.google.com/file/d/1CW2n_iA4vZiUvl7_q476CKzuKNIdsjF7/preview",
+            'Rightship Inspection': "https://drive.google.com/file/d/1dotqRuVRJuQB3ClID4gOpfoHp-Qe22VS/preview"
+        };
+
+        const driveAssessments = {
+            'Cyber Security': "https://docs.google.com/forms/d/e/1FAIpQLSeFQB6mBCBE6VZENsk9B7Eqx0qHVHpPl30yMCRvhZTNHJFL6A/viewform?embedded=true",
+            'Rightship Inspection': "https://forms.gle/WvdG3sTwq1KHR5Qf7"
+        };
+
+        const driveAssessmentDirectLinks = {
+            'Cyber Security': "https://docs.google.com/forms/d/e/1FAIpQLSeFQB6mBCBE6VZENsk9B7Eqx0qHVHpPl30yMCRvhZTNHJFL6A/viewform",
+            'Rightship Inspection': "https://forms.gle/WvdG3sTwq1KHR5Qf7"
+        };
+
+        function handleRegistration() {
+            document.getElementById('step-registration').classList.add('hidden');
+            document.getElementById('step-course-select').classList.remove('hidden');
+        }
+
+        function selectCourse(courseName) {
+            selectedCourse = courseName;
+            
+            // Reset completion tracking when course is selected
+            const totalVideos = driveVideos[selectedCourse].length;
+            completedVideos = new Array(totalVideos).fill(false);
+            guidelinesCompleted = false;
+
+            document.getElementById('step-course-select').classList.add('hidden');
+            showCourseHub();
+        }
+
+        function backToCourseSelect() {
+            document.getElementById('step-course-hub').classList.add('hidden');
+            document.getElementById('step-course-select').classList.remove('hidden');
+        }
+
+        function showCourseHub() {
+            document.getElementById('hubTitle').innerText = `${selectedCourse} - Content Menu`;
+            const hubList = document.getElementById('hubList');
+            hubList.innerHTML = '';
+
+            // Generate Video Buttons
+            const playlist = driveVideos[selectedCourse];
+            playlist.forEach((url, index) => {
+                const isDone = completedVideos[index];
+
+                const btn = document.createElement('button');
+                btn.className = 'hub-item';
+                btn.innerText = isDone ? `✅ Video ${index + 1} (Completed)` : `▶ Play Video ${index + 1}`;
+                
+                // Color green if completed
+                if (isDone) {
+                    btn.style.backgroundColor = '#166534';
+                    btn.style.borderColor = '#15803d';
+                }
+
+                btn.onclick = () => loadVideo(index);
+                hubList.appendChild(btn);
+            });
+
+            // Generate Guidelines Button
+            const guideBtn = document.createElement('button');
+            guideBtn.className = 'hub-item guidelines-item';
+            guideBtn.innerText = guidelinesCompleted ? `✅ Guidelines Document (Completed)` : `📄 Read Guidelines Document`;
+            
+            // Color green if completed
+            if (guidelinesCompleted) {
+                guideBtn.style.backgroundColor = '#166534';
+                guideBtn.style.borderColor = '#15803d';
+            }
+
+            guideBtn.onclick = () => openGuidelines();
+            hubList.appendChild(guideBtn);
+
+            // DEMO OVERRIDE: Assessment Button is ALWAYS active and unlocked
+            const proceedBtn = document.getElementById('proceedAssessmentBtn');
+            proceedBtn.disabled = false;
+            proceedBtn.innerText = "Proceed to Final Assessment →";
+            proceedBtn.style.backgroundColor = "#0284c7";
+
+            document.getElementById('step-course-hub').classList.remove('hidden');
+        }
+
+        function backToHub() {
+            // Stop timers if user navigates back early
+            if (timerInterval) clearInterval(timerInterval);
+            if (guidelinesTimer) clearInterval(guidelinesTimer);
+
+            // Stop iframes from playing in background
+            document.getElementById('driveFrame').src = '';
+            document.getElementById('guidelinesFrame').src = '';
+
+            document.getElementById('step-videos').classList.add('hidden');
+            document.getElementById('step-guidelines').classList.add('hidden');
+            
+            // Re-render hub to update checkmarks
+            showCourseHub(); 
+        }
+
+        function loadVideo(index) {
+            currentPlayingIndex = index;
+            document.getElementById('step-course-hub').classList.add('hidden');
+            document.getElementById('step-videos').classList.remove('hidden');
+
+            const playlist = driveVideos[selectedCourse];
+
+            document.getElementById('videoTitle').innerText = `Video ${index + 1} - ${selectedCourse}`;
+            document.getElementById('driveFrame').src = playlist[index];
+
+            const btn = document.getElementById('videoDoneBtn');
+            
+            // DEMO OVERRIDE: Instant unlock for videos
+            completedVideos[currentPlayingIndex] = true; 
+            btn.disabled = false;
+            btn.innerText = "Video Complete → Back to Menu";
+        }
+
+        function openGuidelines() {
+            document.getElementById('step-course-hub').classList.add('hidden');
+            document.getElementById('guidelinesFrame').src = driveGuidelines[selectedCourse];
+            document.getElementById('step-guidelines').classList.remove('hidden');
+            
+            startGuidelinesTimer();
+        }
+
+        function startGuidelinesTimer() {
+            const btn = document.getElementById('guidelinesBtn');
+            
+            // DEMO OVERRIDE: Instant unlock for guidelines
+            guidelinesCompleted = true;
+            btn.disabled = false;
+            btn.innerText = "Guidelines Completed → Back to Menu";
+        }
+
+        function unlockAssessment() {
+            document.getElementById('step-course-hub').classList.add('hidden');
+            
+            document.getElementById('assessmentTitle').innerText = `${selectedCourse} - Final Assessment`;
+            document.getElementById('assessmentFrame').src = driveAssessments[selectedCourse];
+            document.getElementById('assessmentFallbackLink').href = driveAssessmentDirectLinks[selectedCourse];
+            
+            document.getElementById('step-assessment').classList.remove('hidden');
+        }
+
+        // NEW: Show the dedicated fail page
+        function handleFail() {
+            document.getElementById('step-assessment').classList.add('hidden');
+            document.getElementById('step-retake').classList.remove('hidden');
+        }
+
+        // NEW: Reload form from the Retake page
+        function retakeAssessment() {
+            const frame = document.getElementById('assessmentFrame');
+            frame.src = frame.src; // Reload iframe
+            
+            document.getElementById('step-retake').classList.add('hidden');
+            document.getElementById('step-assessment').classList.remove('hidden');
+            document.getElementById('step-assessment').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // NEW: Let them go back to review videos from the Retake page
+        function backToCourseHubFromRetake() {
+            document.getElementById('step-retake').classList.add('hidden');
+            document.getElementById('step-course-hub').classList.remove('hidden');
+        }
+
+        function completeTraining() {
+            // DEMO OVERRIDE: Removed 45-second assessment timer block
+            localStorage.setItem("seafarer_course_completed", "true");
+            document.getElementById('step-assessment').classList.add('hidden');
+            document.getElementById('step-complete').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
