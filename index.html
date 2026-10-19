@@ -1,535 +1,1048 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seafarer Training Portal - DEMO VERSION</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: Arial, sans-serif; 
-            background-color: #0f172a; 
-            color: #f8fafc; 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-        }
-        
-        .card { 
-            background-color: #1e293b; 
-            padding: 30px; 
-            border-radius: 12px; 
-            width: 100%; 
-            max-width: 1100px; 
-            margin-bottom: 20px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5); 
-        }
-        
-        .hidden { display: none !important; }
-        h1, h2, h3 { color: #38bdf8; margin-bottom: 15px; }
-        p { margin-bottom: 15px; line-height: 1.6; color: #cbd5e1; }
-        
-        .portal-header { text-align: center; margin-bottom: 20px; }
-        .portal-header img { max-width: 100%; height: auto; max-height: 220px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 15px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bellfranc Seafarer Training Portal — Demo</title>
 
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            background-color: #000;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        .form-wrapper {
-            width: 100%;
-            height: 750px;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            background-color: #ffffff;
-        }
-
-        .form-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        .drive-shield {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 80px;
-            height: 80px;
-            background: transparent;
-            z-index: 10;
-        }
-
-        .external-link-btn {
-            display: inline-block;
-            background-color: #334155;
-            color: #38bdf8;
-            border: 1px solid #38bdf8;
-            padding: 10px 18px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-bottom: 15px;
-            transition: 0.2s;
-        }
-        .external-link-btn:hover {
-            background-color: #38bdf8;
-            color: #0f172a;
-        }
-
-        .btn { 
-            background-color: #0284c7; 
-            color: white; 
-            border: none; 
-            padding: 14px 24px; 
-            font-size: 16px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            transition: 0.2s; 
-            width: 100%; 
-        }
-        .btn:disabled { background-color: #475569; cursor: not-allowed; opacity: 0.7; }
-        .btn:hover:not(:disabled) { background-color: #0369a1; }
-
-        .btn-back {
-            background-color: #475569;
-            width: auto;
-            margin-bottom: 20px;
-            padding: 10px 18px;
-            font-size: 14px;
-        }
-        .btn-back:hover:not(:disabled) { background-color: #64748b; }
-        
-        .course-grid { display: flex; gap: 20px; }
-        .course-card { flex: 1; padding: 30px; background-color: #334155; border-radius: 8px; text-align: center; cursor: pointer; border: 2px solid transparent; }
-        .course-card:hover { border-color: #38bdf8; }
-        
-        .hub-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
-        .hub-item { background-color: #334155; padding: 15px; border-radius: 8px; cursor: pointer; border: 1px solid #475569; transition: 0.2s; font-weight: bold; text-align: left; color: white;}
-        .hub-item:hover { border-color: #38bdf8; background-color: #1e293b; }
-        .hub-item.guidelines-item { background-color: #0f766e; border-color: #115e59; }
-        .hub-item.guidelines-item:hover { background-color: #115e59; }
-
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        @media (max-width: 600px) {
-            .action-buttons { flex-direction: column; }
-        }
-
-        .demo-badge {
-            background-color: #ef4444;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-    </style>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f172a;--card:#1e293b;--item:#334155;--line:#475569;--blue:#0284c7;--cyan:#38bdf8;--text:#f8fafc;--muted:#cbd5e1;--green:#166534}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);padding:20px;display:flex;flex-direction:column;align-items:center}
+.portal-header{text-align:center;margin:10px auto 28px;width:100%;max-width:1100px}
+.portal-header img{max-width:100%;max-height:220px;margin-bottom:15px;border-radius:8px}
+.portal-header h1{font-size:clamp(28px,5vw,48px);color:var(--cyan);margin-top:12px}
+.demo-badge{display:inline-block;background:#ef4444;color:white;padding:8px 12px;border-radius:5px;font-size:13px;font-weight:bold;margin-bottom:10px}
+.card{background:var(--card);padding:clamp(20px,4vw,40px);border-radius:18px;width:100%;max-width:1100px;margin-bottom:22px;box-shadow:0 8px 24px #0004}
+.hidden{display:none!important}
+h2,h3{color:var(--cyan);margin-bottom:18px;line-height:1.25}
+h2{font-size:clamp(25px,4vw,36px)}
+h3{font-size:22px}
+p{margin-bottom:18px;line-height:1.65;color:var(--muted);font-size:clamp(16px,2.5vw,20px)}
+.btn{display:block;width:100%;border:0;border-radius:7px;padding:17px 20px;background:var(--blue);color:#fff;font-size:17px;font-weight:bold;cursor:pointer;margin-top:14px}
+.btn:hover{filter:brightness(1.1)}
+.btn-back{background:#475569;max-width:390px;margin:0 0 28px}
+.btn-secondary{background:#475569}
+.btn-danger{background:#b91c1c}
+.btn-green{background:#166534}
+.btn-manage-top{display:block;width:auto;min-width:254px;max-width:100%;margin:0 auto 28px;background:#f59e0b;color:#111827;border-radius:9px;padding:14px 22px;font-size:16px;box-shadow:0 3px 0 #b45309}
+.btn-manage-top:hover{background:#fbbf24;filter:none}
+.course-select-heading{text-align:center}
+@media(max-width:650px){.btn-manage-top{width:100%;min-width:0}}
+.course-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.course-card{background:var(--item);border:2px solid transparent;border-radius:12px;padding:28px 20px;text-align:left;cursor:pointer;min-height:160px}
+.course-card:hover{border-color:var(--cyan)}
+.course-card p{font-size:16px;margin:0}
+.course-card h3{margin-bottom:10px}
+.hub-list{display:flex;flex-direction:column;gap:16px;margin:24px 0 30px}
+.hub-item{width:100%;text-align:left;background:var(--item);border:1px solid var(--line);border-radius:15px;padding:23px 25px;color:#fff;font-size:19px;font-weight:bold;cursor:pointer;min-height:88px}
+.hub-item:hover{border-color:var(--cyan);background:#29384b}
+.hub-item.guidelines-item{background:#0f766e;border-color:#115e59}
+.hub-item.completed{background:#166534;border-color:#15803d}
+.rule{border:0;border-top:1px solid #475569;margin:28px 0}
+.video-wrapper{position:relative;width:100%;padding-top:56.25%;background:#000;border-radius:9px;overflow:hidden;margin:20px 0}
+.video-wrapper iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.pdf-wrapper{position:relative;width:100%;height:min(72vh,850px);min-height:420px;background:#fff;border-radius:9px;overflow:hidden;margin:20px 0}
+.pdf-wrapper iframe{width:100%;height:100%;border:0}
+.field{margin-bottom:17px}
+label{display:block;color:var(--muted);font-weight:bold;margin-bottom:7px}
+input,select,textarea{width:100%;padding:13px;border:1px solid #64748b;border-radius:7px;background:#0f172a;color:white;font-size:16px}
+.small{font-size:14px}
+.question{background:#334155;padding:18px;border-radius:10px;margin:15px 0}
+.question p{font-size:17px;color:white;margin-bottom:12px}
+.option{display:flex;gap:10px;align-items:flex-start;margin:11px 0;color:var(--muted);line-height:1.4}
+.option input{width:auto;margin-top:3px}
+.status{padding:15px;border-radius:8px;background:#334155;margin:15px 0;color:white}
+.admin-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.module-edit{border:1px solid #475569;padding:16px;border-radius:10px;margin:14px 0}
+a{color:#7dd3fc}
+@media(max-width:650px){
+body{padding:12px}
+.course-grid,.admin-row{grid-template-columns:1fr}
+.hub-item{font-size:17px;padding:20px;min-height:75px}
+.card{border-radius:15px}
+.portal-header{margin-top:6px}
+}
+#retakeBtn{background:red!important;background-color:red!important;color:white!important;border:none!important}
+</style>
 </head>
+
 <body>
 
-    <div class="portal-header">
-        <div class="demo-badge">DEMO MODE ACTIVE (Timers & Assessment Unlocked)</div><br>
-        <img src="Bellfranc.jpg" alt="Bellfranc Training Portal Header" onerror="this.style.display='none'">
-        <h1>Seafarer Training Portal</h1>
+<header class="portal-header">
+  <div class="demo-badge">DEMO MODE ACTIVE — (Timers & Assessment Unlocked)</div>
+  <br>
+  <img src="Bellfranc.jpg" alt="Bellfranc Training Portal" onerror="this.style.display='none'">
+  <h1>Seafarer Training Portal</h1>
+</header>
+
+<section id="introPage" class="card">
+  <h2>Welcome to Bellfranc Training</h2>
+  <p>Please watch the introductory video below before proceeding to seafarer registration.</p>
+
+  <div class="video-wrapper">
+    <iframe
+      src="https://drive.google.com/file/d/1cSe0VSYngrD5ktSZF7lzrg9roOJu32UN/preview"
+      allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+      allowfullscreen
+      loading="eager"
+      referrerpolicy="strict-origin-when-cross-origin"
+      title="Introduction video">
+    </iframe>
+  </div>
+
+  <button class="btn" type="button" onclick="showPage('registrationPage')">
+    Proceed to Registration →
+  </button>
+</section>
+
+<section id="registrationPage" class="card hidden">
+  <button class="btn btn-back" type="button" onclick="showPage('introPage')">← Back</button>
+  <h2>Seafarer Registration</h2>
+  <p>Please complete registration form below before starting the training module or your training will not be recorded.</p>
+
+  <div id="registrationMessage" class="status hidden" role="alert" aria-live="polite"></div>
+
+  <form id="registrationForm" novalidate>
+    <div class="form-field">
+      <label for="fullName">Full Name (as per Passport)</label>
+      <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" autocomplete="name" maxlength="120">
     </div>
 
-    <!-- ACCESS EXPIRED CARD -->
-    <div id="step-expired" class="card hidden" style="text-align: center;">
-        <h2 style="color: #ef4444;">Access Expired</h2>
-        <p>This training link is no longer active because the course was already completed or your 10-day validity period has passed.</p>
+    <div class="form-field">
+      <label for="passportNo">PASSPORT Number</label>
+      <input type="text" id="passportNo" name="passportNo" placeholder="Enter passport number" autocomplete="off" maxlength="40">
     </div>
 
-    <!-- STEP 0: Introduction Video -->
-    <div id="step-intro" class="card">
-        <h2>Welcome to Bellfranc Training</h2>
-        <p>Please watch the introductory video below before proceeding to seafarer registration.</p>
-        
-        <div class="video-wrapper">
-            <div class="drive-shield"></div>
-            <iframe id="introFrame" src="https://drive.google.com/file/d/1cSe0VSYngrD5ktSZF7lzrg9roOJu32UN/preview" allow="autoplay"></iframe>
-        </div>
-
-        <button id="introBtn" class="btn" disabled onclick="finishIntro()">Please watch introductory video...</button>
+    <div class="form-field">
+      <label for="dob">DATE OF BIRTH</label>
+      <input type="date" id="dob" name="dob" autocomplete="bday">
     </div>
 
-    <!-- STEP 1: Registration Google Form -->
-    <div id="step-registration" class="card hidden">
-        <h2>Seafarer Registration</h2>
-        <p>Please complete registration form below before starting the training module or your training will not be recorded.</p>
-
-        <div style="text-align: center;">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd3bNL3etxaJdmzdB18IYU5bxsCQ2GfV-gsB2wsez50HfTyng/viewform" target="_blank" class="external-link-btn">
-                ↗ Open Registration Form in New Window (If not loading)
-            </a>
-        </div>
-
-        <div class="form-wrapper">
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd3bNL3etxaJdmzdB18IYU5bxsCQ2GfV-gsB2wsez50HfTyng/viewform?embedded=true">Loading…</iframe>
-        </div>
-
-        <button class="btn" onclick="handleRegistration()">Proceed to Course Selection</button>
+    <div class="form-field">
+      <label for="indosNo">INDOS Number</label>
+      <input type="text" id="indosNo" name="indosNo" placeholder="Enter INDOS number" maxlength="40">
     </div>
 
-    <!-- STEP 2: Course Selection -->
-    <div id="step-course-select" class="card hidden">
-        <h2>Select Training Course</h2>
-        <div class="course-grid">
-            <div class="course-card" onclick="selectCourse('Cyber Security')">
-                <h3>Cyber Security</h3>
-                <p>7 Training Videos + 1 Guidelines Document</p>
-            </div>
-            <div class="course-card" onclick="selectCourse('Rightship Inspection')">
-                <h3>Rightship Inspection</h3>
-                <p>6 Training Videos + 1 Guidelines Document</p>
-            </div>
-        </div>
+    <div class="form-field">
+      <label for="cdcNo">CDC Number</label>
+      <input type="text" id="cdcNo" name="cdcNo" placeholder="Enter CDC number" maxlength="40">
     </div>
 
-    <!-- STEP 2.5: Course Hub (Selection Menu) -->
-    <div id="step-course-hub" class="card hidden">
-        <button class="btn btn-back" onclick="backToCourseSelect()">← Back to Course Selection</button>
-        <h2 id="hubTitle">Course Content</h2>
-        <p>Select a video or Guidelines documents to review. You must complete viewing all videos and spend atleast one hour viewing the training Guidelines documents in order to complete the training courses, Do not attempt to fast forward the video.</p>
-        
-        <div id="hubList" class="hub-list">
-            <!-- Dynamic Content Injected Here -->
-        </div>
-
-        <hr style="border: 1px solid #334155; margin-bottom: 20px;">
-        
-        <p style="font-size: 14px;">Only once you have completed watching all the videos and spend one hour reading the guideline, you will be able to do the assessment.</p>
-        <button id="proceedAssessmentBtn" class="btn" onclick="unlockAssessment()">Proceed to Final Assessment →</button>
+    <div class="form-field">
+      <label for="rank">Rank</label>
+      <select id="rank" name="rank">
+        <option value="">Select rank</option>
+        <option>Master</option>
+        <option>Chief Officer</option>
+        <option>Second Officer</option>
+        <option>Third Officer</option>
+        <option>Deck Cadet</option>
+        <option>Chief Engineer</option>
+        <option>Second Engineer</option>
+        <option>Third Engineer</option>
+        <option>Fourth Engineer</option>
+        <option>Engine Cadet</option>
+        <option>ETO</option>
+        <option>Electrical Officer</option>
+        <option>Trainee ETO</option>
+        <option>Pumpman</option>
+        <option>Bosun</option>
+        <option>AB</option>
+        <option>OS</option>
+        <option>Oiler</option>
+        <option>Wiper</option>
+        <option>Cook</option>
+        <option>Messman</option>
+        <option>Other</option>
+      </select>
     </div>
 
-    <!-- STEP 3: Individual Video Player -->
-    <div id="step-videos" class="card hidden">
-        <button class="btn btn-back" onclick="backToHub()">← Back to Content Menu</button>
-        <h2 id="videoTitle">Video</h2>
-        
-        <div class="video-wrapper">
-            <div class="drive-shield"></div>
-            <iframe id="driveFrame" src="" allow="autoplay"></iframe>
-        </div>
-
-        <button id="videoDoneBtn" class="btn" disabled onclick="backToHub()">Please watch video...</button>
+    <div class="photo-upload">
+      <label for="seafarerPhoto">Upload Your Photo:</label>
+      <input type="file" id="seafarerPhoto" accept="image/*">
+      <br><br>
+      <img id="photoPreview" src="" alt="Photo Preview"
+        style="display:none;width:150px;height:150px;object-fit:cover;border-radius:10px;">
     </div>
 
-    <!-- STEP 4: Guidelines Document -->
-    <div id="step-guidelines" class="card hidden">
-        <button class="btn btn-back" onclick="backToHub()">← Back to Content Menu</button>
-        <h2>Course Guidelines & Code of Practice</h2>
-        <p>Please review the complete guidelines below. You must spent at least 1 hour viewing this document.</p>
-        
-        <div class="video-wrapper" style="padding-top: 70%;">
-            <div class="drive-shield"></div>
-            <iframe id="guidelinesFrame" src="" allow="autoplay"></iframe>
-        </div>
+    <button class="btn" id="continueToCoursesBtn" type="button" onclick="continueToCourseSelection()">
+      Continue to Course Selection →
+    </button>
+  </form>
+</section>
 
-        <button id="guidelinesBtn" class="btn" disabled onclick="backToHub()">Please read guidelines (60:00 remaining)...</button>
-    </div>
+<section id="courseSelectPage" class="card hidden">
+  <button class="btn btn-manage-top" type="button" onclick="showPage('managePage');renderManage()">
+    🔧 Manage Courses / Modules
+  </button>
+  <h2 class="course-select-heading">Select Training Course</h2>
+  <p>Select a training course below to access the learning materials, training videos, and guidelines. Choose the course relevant to your training requirements to get started.</p>
+  <div class="course-grid" id="courseGrid"></div>
+  <hr class="rule">
+</section>
 
-    <!-- STEP 5: Assessment Google Form -->
-    <div id="step-assessment" class="card hidden">
-        <h2 id="assessmentTitle">Final Assessment</h2>
-        <p>Please complete the assessment below. <strong>You must score at least 70% to pass.</strong> Once submitted, click "View Score". If your score is below 21, you must retake the test.</p>
+<section id="courseHubPage" class="card hidden">
+  <button class="btn btn-back" type="button" onclick="showPage('courseSelectPage')">← Back to Course Selection</button>
+  <h2 id="hubTitle">Course Content Menu</h2>
+  <p id="hubDescription">Select a video or Guidelines documents to review. You must complete viewing all videos and spend atleast one hour viewing the training Guidelines documents in order to complete the training courses, Do not attempt to fast forward the video..</p>
+  <div id="hubList" class="hub-list"></div>
+  <hr class="rule">
+  <p>Only once you have completed watching all the videos and spend one hour reading the guideline, you will be able to do the assessment.</p>
+  <button class="btn" type="button" onclick="openAssessment()">Proceed to Final Assessment →</button>
+</section>
 
-        <div style="text-align: center;">
-            <a id="assessmentFallbackLink" href="#" target="_blank" class="external-link-btn">
-                ↗ Open Assessment Form in New Window (If not loading)
-            </a>
-        </div>
+<section id="videoPage" class="card hidden">
+  <button class="btn btn-back" type="button" onclick="backToHub()">← Back to Content Menu</button>
+  <h2 id="videoTitle">Training Video</h2>
+  <div class="video-wrapper">
+    <iframe id="videoFrame" src="about:blank"
+      allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+      allowfullscreen loading="eager"
+      referrerpolicy="strict-origin-when-cross-origin"
+      title="Training video"></iframe>
+  </div>
+  <button class="btn" type="button" onclick="markCurrentModuleComplete()">Video Complete → Back to Menu</button>
+</section>
 
-        <div class="form-wrapper">
-            <iframe id="assessmentFrame" src="">Loading…</iframe>
-        </div>
+<section id="guidelinesPage" class="card hidden">
+  <button class="btn btn-back" type="button" onclick="backToHub()">← Back to Content Menu</button>
+  <h2 id="guidelinesTitle">Course Guidelines & Code of Practice</h2>
+  <p>If the PDF does not display inside this page, use the Open Guidelines button below. The document must be shared publicly or with anyone who has the link.</p>
+  <div class="pdf-wrapper">
+    <iframe id="guidelinesFrame" src="" title="Course guidelines PDF"></iframe>
+  </div>
+  <button class="btn" type="button" onclick="markCurrentModuleComplete()">Guidelines Complete → Back to Menu</button>
+</section>
 
-        <div class="action-buttons">
-            <button class="btn" style="background-color: #ef4444;" onclick="handleFail()">I Scored Below 21 (Retake Test)</button>
-            <button class="btn" style="background-color: #166534;" onclick="completeTraining()">I Scored 21+ → Finish Course</button>
-        </div>
-    </div>
+<section id="assessmentPage" class="card hidden">
+  <button class="btn btn-back" type="button" onclick="backToHub()">← Back to Content Menu</button>
+  <h2 id="assessmentTitle">Final Assessment</h2>
+  <p>Please complete the assessment below. You must score at least 70% to pass, i.e. 21/30.</p>
+  <form id="quizForm">
+    <div id="quizQuestions"></div>
+    <button class="btn" type="submit">Submit Assessment</button>
+  </form>
+</section>
 
-    <!-- STEP 5.5: DEDICATED RETAKE PAGE -->
-    <div id="step-retake" class="card hidden" style="text-align: center;">
-        <h2 style="color: #ef4444;">Assessment Failed</h2>
-        <p>You did not meet the minimum required score of 21 to pass this course.</p>
-        <p>You must retake the assessment to complete your training successfully. You may jump straight into the retake, or return to the course content to review the materials again.</p>
-        
-        <br>
-        <button class="btn" style="background-color: #0284c7; margin-bottom: 15px;" onclick="retakeAssessment()">↺ Start Retake Now</button>
-        <button class="btn btn-back" onclick="backToCourseHubFromRetake()">← Return to Course Content Menu</button>
-    </div>
+<section id="resultPage" class="card hidden">
+  <h2 id="resultTitle">Assessment Completed!</h2>
+  <p id="resultContent">Thank you for completing the training course and assessment.</p>
 
-    <!-- STEP 6: Completion Screen -->
-    <div id="step-complete" class="card hidden">
-        <h2>Assessment Completed!</h2>
-        <p>Thank you for completing the training course and assessment. Your passing score and training record have been successfully submitted and saved.</p>
-    </div>
+  <button id="retakeBtn" class="btn" type="button" onclick="openAssessment()">
+    ↻ Try Assessment Again
+  </button>
 
-    <script>
-        window.onload = function() {
-            // DEMO OVERRIDE: Clear local storage on load so it never locks you out during a demo
-            localStorage.clear(); 
-            startIntroTimer();
-        };
+  <button class="btn btn-secondary" type="button" onclick="showPage('courseSelectPage')">
+    Back to Course Selection
+  </button>
+</section>
 
-        let selectedCourse = '';
-        let timerInterval = null;
-        let introTimer = null;
-        let guidelinesTimer = null;
-        let assessmentStartTime = 0;
-        
-        // Tracking Completion State
-        let completedVideos = [];
-        let guidelinesCompleted = false;
-        let currentPlayingIndex = -1;
+<section id="managePage" class="card hidden">
+  <button class="btn btn-back" type="button" onclick="showPage('courseSelectPage')">← Back to Course Selection</button>
+  <h2>Manage Courses / Modules</h2>
+  <p>Add, rename or remove courses and modules. Changes are local to this browser and are not sent to a server.</p>
 
-        // DEMO OVERRIDE: Intro set to 0 seconds
-        const introDuration = 0; 
+  <div class="field">
+    <label for="newCourseName">Add course</label>
+    <input id="newCourseName" placeholder="Course name">
+    <button class="btn" type="button" onclick="addCourse()">+ Add Course</button>
+  </div>
 
-        function startIntroTimer() {
-            let secondsRemaining = introDuration;
-            const btn = document.getElementById('introBtn');
-            btn.disabled = true;
+  <div id="manageCourses"></div>
+  <hr class="rule">
+  <button class="btn btn-secondary" type="button" onclick="exportBackup()">Download Course Backup (JSON)</button>
 
-            introTimer = setInterval(() => {
-                secondsRemaining--;
+  <div class="field" style="margin-top:18px">
+    <label for="importFile">Import course backup</label>
+    <input id="importFile" type="file" accept=".json,application/json">
+    <button class="btn btn-secondary" type="button" onclick="importBackup()">Import Backup</button>
+  </div>
 
-                if (secondsRemaining <= 0) {
-                    clearInterval(introTimer);
-                    btn.disabled = false;
-                    btn.innerText = "Proceed to Registration →";
-                } else {
-                    const mins = Math.floor(secondsRemaining / 60);
-                    const secs = secondsRemaining % 60;
-                    const timeFormatted = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-                    btn.innerText = `Watch intro video to proceed (${timeFormatted} remaining)...`;
-                }
-            }, 100); // DEMO OVERRIDE: Fast interval
+  <p class="small">Keep a backup before deleting or editing course information. The original video and guideline links are prefilled for the two original courses.</p>
+</section>
+
+<script>
+'use strict';
+
+const STORAGE_KEY = 'bellfranc_portal_demo_v3';
+
+const originalCourses = [
+ {
+  id:'cyber',
+  name:'Cyber Security',
+  description:'7 Training Videos + 1 Guidelines Document',
+  guidelines:'https://drive.google.com/file/d/1CW2n_iA4vZiUvl7_q476CKzuKNIdsjF7/preview',
+  modules:[
+   {title:'Video 1',url:'https://drive.google.com/file/d/1dES7G6RNz7aRZQSoFMLtVBqxEtvoFBbh/preview',type:'video'},
+   {title:'Video 2',url:'https://drive.google.com/file/d/1hAhTBhrN95-UsHA-XpLrw8MQp85PREEF/preview',type:'video'},
+   {title:'Video 3',url:'https://drive.google.com/file/d/1JzpeToh7nByjIWsR1vzN64Yo9eRcQWzn/preview',type:'video'},
+   {title:'Video 4',url:'https://drive.google.com/file/d/1cNtLFxZQnwDWXqkpN1xCBCJySYRryDLV/preview',type:'video'},
+   {title:'Video 5',url:'https://drive.google.com/file/d/16t5tG2c3Xt8Et6jToJ7PXFTvufxJGxHJ/preview',type:'video'},
+   {title:'Video 6',url:'https://drive.google.com/file/d/1P4KcLF_PRWCyDAQ7MEaGNiFsaIURlGcx/preview',type:'video'},
+   {title:'Video 7',url:'https://drive.google.com/file/d/1wwsMwNC1Xym0iigRJ8wAr9YgyS_Jt74y/preview',type:'video'}
+  ]
+ },
+ {
+  id:'rightship',
+  name:'RightShip Inspection',
+  description:'6 Training Videos + 1 Guidelines Document',
+  guidelines:'https://drive.google.com/file/d/1dotqRuVRJuQB3ClID4gOpfoHp-Qe22VS/preview',
+  modules:[
+   {title:'Video 1',url:'https://drive.google.com/file/d/1nEL8Z86VSEMLlYLGU_5WVuA-s6RLJ7IU/preview',type:'video'},
+   {title:'Video 2',url:'https://drive.google.com/file/d/1a_h1c-EzaD6MxVhf9t8xww9SoU1XHMs8/preview',type:'video'},
+   {title:'Video 3',url:'https://drive.google.com/file/d/1AZJTuhkL5KWeiib3Lk3eDPIDFGhd4hkI/preview',type:'video'},
+   {title:'Video 4',url:'https://drive.google.com/file/d/1L-FpGr4MFe4fPxp5mAAJCUnPbe3E7Y9g/preview',type:'video'},
+   {title:'Video 5',url:'https://drive.google.com/file/d/1ZuclJFfmbQyLoiAUSK3fy9pOXpoyPFVP/preview',type:'video'},
+   {title:'Video 6',url:'https://drive.google.com/file/d/1xXUOUfptqxJUIncKZAz69GPjUbkmnqcY/preview',type:'video'}
+  ]
+ }
+];
+
+let courses = loadCourses();
+let currentCourseId = null;
+let currentModuleIndex = null;
+let currentModuleType = null;
+let registration = {};
+let completed = {};
+
+function loadCourses(){
+  try{
+    const saved = localStorage.getItem(STORAGE_KEY);
+    const parsed = saved ? JSON.parse(saved) : null;
+
+    if(Array.isArray(parsed) && parsed.every(isValidCourse)){
+      return parsed;
+    }
+  }catch(err){
+    console.warn('Saved courses could not be loaded; using the defaults.',err);
+  }
+
+  return JSON.parse(JSON.stringify(originalCourses));
+}
+
+function isValidCourse(course){
+  return !!course &&
+    typeof course === 'object' &&
+    typeof course.id === 'string' &&
+    typeof course.name === 'string' &&
+    Array.isArray(course.modules) &&
+    course.modules.every(m => m && typeof m === 'object');
+}
+
+function saveCourses(){
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(courses));
+    return true;
+  }catch(err){
+    alert('Could not save changes in this browser. Check available storage and browser privacy settings.');
+    console.error(err);
+    return false;
+  }
+}
+
+function showPage(id){
+  const target = document.getElementById(id);
+
+  if(!target){
+    console.error('Page not found:',id);
+    alert('Unable to open this page. Please check the page ID: '+id);
+    return;
+  }
+
+  document.querySelectorAll('body > section.card').forEach(section=>{
+    section.classList.add('hidden');
+  });
+
+  target.classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  if(id === 'courseSelectPage'){
+    renderCourses();
+  }
+}
+
+function continueToCourseSelection(){
+  const getValue = id=>{
+    const field = document.getElementById(id);
+    return field ? String(field.value || '').trim() : '';
+  };
+
+  registration = {
+    fullName:getValue('fullName'),
+    passportNo:getValue('passportNo'),
+    dob:getValue('dob'),
+    indosNo:getValue('indosNo'),
+    cdcNo:getValue('cdcNo'),
+    rank:getValue('rank')
+  };
+
+  try{
+    localStorage.setItem('bellfranc_demo_registration',JSON.stringify(registration));
+  }catch(err){
+    console.warn('Registration could not be saved.',err);
+  }
+
+  document.getElementById('registrationMessage').classList.add('hidden');
+  renderCourses();
+  showPage('courseSelectPage');
+}
+
+document.getElementById('registrationForm').addEventListener('submit',function(event){
+  event.preventDefault();
+  continueToCourseSelection();
+});
+
+function renderCourses(){
+  const grid = document.getElementById('courseGrid');
+  grid.innerHTML = '';
+
+  courses.forEach(course=>{
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'course-card';
+    button.innerHTML = '<h3></h3><p></p>';
+    button.querySelector('h3').textContent = course.name;
+    button.querySelector('p').textContent =
+      course.description || `${course.modules.length} training modules + guidelines document`;
+
+    button.onclick = ()=>openCourse(course.id);
+    grid.appendChild(button);
+  });
+}
+
+function openCourse(id){
+  currentCourseId = id;
+  const course = courses.find(item=>item.id === id);
+
+  if(!course)return;
+
+  document.getElementById('hubTitle').textContent = course.name+' - Content Menu';
+  document.getElementById('hubDescription').textContent =
+    'Select a video or Guidelines document to review. You can open the final assessment at any time in demo mode.';
+
+  renderHub();
+  showPage('courseHubPage');
+}
+
+function renderHub(){
+  const course = courses.find(item=>item.id === currentCourseId);
+  if(!course)return;
+
+  const list = document.getElementById('hubList');
+  list.innerHTML = '';
+
+  course.modules.forEach((module,index)=>{
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'hub-item';
+
+    const done = !!completed[course.id+'_'+index];
+
+    if(done){
+      button.classList.add('completed');
+      button.textContent = '✅ '+(module.title || ('Video '+(index+1)))+' (Completed)';
+    }else{
+      button.textContent = '▶ Play '+(module.title || ('Video '+(index+1)));
+    }
+
+    button.setAttribute(
+      'aria-label',
+      (done ? 'Completed: ' : 'Play ')+(module.title || ('Video '+(index+1)))
+    );
+
+    button.onclick = ()=>openModule(index);
+    list.appendChild(button);
+  });
+
+  const guidelinesButton = document.createElement('button');
+  guidelinesButton.type = 'button';
+  guidelinesButton.className = 'hub-item guidelines-item';
+
+  const guidelinesDone = !!completed[course.id+'_guidelines'];
+
+  if(guidelinesDone){
+    guidelinesButton.classList.add('completed');
+    guidelinesButton.textContent = '✅ Guidelines Document (Completed)';
+  }else{
+    guidelinesButton.textContent = '📄 Read Guidelines Document';
+  }
+
+  guidelinesButton.setAttribute(
+    'aria-label',
+    guidelinesDone ? 'Guidelines document completed' : 'Read guidelines document'
+  );
+
+  guidelinesButton.onclick = openGuidelines;
+  list.appendChild(guidelinesButton);
+}
+
+function openModule(index){
+  const course = courses.find(item=>item.id === currentCourseId);
+  const module = course && Array.isArray(course.modules) ? course.modules[index] : null;
+
+  if(!course || !module){
+    alert('This training module is no longer available.');
+    renderHub();
+    return;
+  }
+
+  currentModuleIndex = index;
+  currentModuleType = 'video';
+
+  document.getElementById('videoTitle').textContent =
+    (module.title || 'Training Video')+' - '+course.name;
+
+  const previewUrl = toPreview(module.url || '');
+  const frame = document.getElementById('videoFrame');
+  frame.src = 'about:blank';
+
+  if(previewUrl === 'about:blank'){
+    alert('This video does not have a valid URL. Please check it in Manage Courses / Modules.');
+    return;
+  }
+
+  frame.src = previewUrl;
+  showPage('videoPage');
+}
+
+function openGuidelines(){
+  const course = courses.find(item=>item.id === currentCourseId);
+  if(!course)return;
+
+  currentModuleType = 'guidelines';
+  currentModuleIndex = null;
+
+  document.getElementById('guidelinesTitle').textContent =
+    course.name+' - Guidelines & Code of Practice';
+
+  const url = toPreview(course.guidelines || '');
+
+  if(url === 'about:blank'){
+    alert('No valid guidelines URL is saved for this course. Please add it in Manage Courses / Modules.');
+    return;
+  }
+
+  document.getElementById('guidelinesFrame').src = url;
+  showPage('guidelinesPage');
+}
+
+function toPreview(url){
+  if(!url)return 'about:blank';
+
+  try{
+    const parsed = new URL(url);
+
+    if(parsed.hostname === 'drive.google.com' && /\/file\/d\//.test(parsed.pathname)){
+      parsed.pathname = parsed.pathname.replace(/\/(view|preview)\/?$/,'/preview');
+      parsed.search = '';
+      parsed.hash = '';
+      return parsed.href;
+    }
+
+    return parsed.href;
+  }catch(err){
+    return 'about:blank';
+  }
+}
+
+function markCurrentModuleComplete(){
+  if(!currentCourseId)return;
+
+  if(currentModuleType === 'guidelines'){
+    completed[currentCourseId+'_guidelines'] = true;
+  }else if(currentModuleIndex !== null){
+    completed[currentCourseId+'_'+currentModuleIndex] = true;
+  }
+
+  backToHub();
+}
+
+function backToHub(){
+  document.getElementById('videoFrame').src = 'about:blank';
+  document.getElementById('guidelinesFrame').src = 'about:blank';
+  renderHub();
+  showPage('courseHubPage');
+}
+
+const cyberQuestions = [
+['What is the primary purpose of a firewall?',['To protect against physical theft','To filter and monitor network traffic','To clean and optimize computer files','To enhance the speed of internet connection'],1],
+['Which of the following is an example of a strong password?',['Password123','123456','MySecurePass!','UserPass'],2],
+['What does "Phishing" refer to in the context of cybersecurity?',['Catching harmful software','Fishing for sensitive information through deceptive emails','Protecting against online scams','Enhancing internet speed'],1],
+['What is the purpose of antivirus software?',['Speeding up the computer','Protecting against viruses and malware','Enhancing internet connectivity','Organizing files on the computer'],1],
+['What does "Two-Factor Authentication" involve?',['Using two different computers','Verifying identity with two separate methods','Encrypting files with two passwords','Accessing the internet from two locations'],1],
+['What is the purpose of regular software updates?',['Enhancing computer speed','Fixing bugs and vulnerabilities','Deleting unnecessary files','Improving internet connectivity'],1],
+['What does a VPN (Virtual Private Network) do?',['Increases computer storage','Secures and encrypts internet connections','Deletes unnecessary files','Monitors network traffic'],1],
+['What is the role of a CAPTCHA?',['Protecting against phishing attacks','Enhancing computer speed','Verifying that the user is human','Deleting unwanted files'],2],
+['What is the purpose of a backup in cybersecurity?',['Increasing internet speed','Protecting against physical theft','Creating a duplicate copy of important data','Deleting unnecessary files'],2],
+['What is a common sign of a secure website?',['The website has a lot of ads','The URL starts with "https://"','The website has a flashy design','The website has a large number of pop-ups'],1],
+['What is the purpose of a honeypot in a cybersecurity strategy?',['To attract and detect attackers','To store encrypted passwords','To optimize network speed','To filter spam emails'],0],
+['What is the difference between symmetric and asymmetric encryption?',['Symmetric encryption uses two keys, while asymmetric uses one key.','Symmetric encryption uses the same key for both encryption and decryption, while asymmetric uses different keys.','Symmetric encryption is faster than asymmetric encryption.','Asymmetric encryption is only used for secure web browsing.'],1],
+['What is the purpose of a Security Information and Event Management (SIEM) system?',['To detect and respond to security incidents','To optimize computer performance','To organize and manage passwords','To encrypt files on a network'],0],
+['What does the term "Zero-Day Exploit" refer to in cybersecurity?',['A vulnerability that has been known for zero days','An attack that occurs without any warning','An exploit that targets previously unknown vulnerabilities','A software with zero security features'],2],
+['What is the concept of "Least Privilege" in the context of access control?',['Allowing users maximum access to resources','Granting access based on job titles','Providing the minimum level of access necessary for tasks','Giving users access only during specific hours'],2],
+['What is the purpose of a Security Risk Assessment?',['To identify and evaluate potential security risks','To increase network speed','To delete unnecessary files','To encrypt all files on the network'],0],
+['What is the difference between penetration testing and vulnerability scanning?',['They are synonymous terms.','Penetration testing involves exploiting vulnerabilities, while vulnerability scanning identifies vulnerabilities.','Vulnerability scanning is more comprehensive than penetration testing.','Penetration testing is only performed by external parties.'],1],
+['What is the purpose of a Security Policy in an organization?',['To slow down cyber attackers','To provide guidelines for secure behavior and decision-making','To delete unwanted files on the network','To enhance internet connectivity'],1],
+['What does the term "Social Engineering" refer to in the context of cybersecurity?',['A technique to enhance social interactions within an organization','Exploiting human psychology to gain access to information','Building secure social networks for organizations','Optimizing internet speed through social connections'],1],
+['What is the purpose of a Security Incident Response Plan?',['To create secure incidents','To provide guidelines for responding to and mitigating security incidents','To delete unwanted emails','To enhance computer speed'],1],
+['What is the role of a Security Information Sharing and Analysis Center (ISAC) in the cybersecurity landscape?',['To conduct security audits','To share and analyze threat intelligence among organizations','To develop encryption algorithms','To manage user access controls'],1],
+['Explain the concept of "Ephemeral Key" in the context of encryption.',['A key that changes frequently, often used for a single session','A long-term encryption key','A key used only for symmetric encryption','A key associated with public-key cryptography'],0],
+['What is the purpose of a Security Token in multi-factor authentication?',['To generate one-time passwords','To increase internet speed','To encrypt files on the network','To conduct security audits'],0],
+['Explain the concept of "Shodan" in cybersecurity.',['A type of malware','A search engine for internet-connected devices','A cryptographic algorithm','An intrusion detection system'],1],
+['What is the significance of the CIA Triad in cybersecurity?',['A model for secure software development','A framework for risk assessment','An encryption algorithm','A model for ensuring the security principles of confidentiality, integrity, and availability'],3],
+['Define "Cryptographic Hash Function" and its use in cybersecurity.',['A function used to encrypt files','A function used to hash passwords','A method to optimize internet speed','A function to detect errors in data transmission'],1],
+['What is the role of a Security Operations Center (SOC) in cybersecurity?',['To develop encryption algorithms','To monitor and respond to security incidents','To conduct security training for employees','To optimize computer performance'],1],
+['Explain the principle of "Defense in Depth" in cybersecurity.',['A strategy involving multiple layers of security controls to protect against various threats','A technique for encrypting sensitive data','A method to speed up internet connectivity','A model for secure software development'],0],
+['What is the purpose of a Digital Forensics investigation in cybersecurity?',['To optimize computer performance','To recover and analyze digital evidence for legal purposes','To manage access controls','To conduct penetration testing'],1],
+['What is a "Blue Team" in the context of cybersecurity?',['A team of ethical hackers','A team responsible for defending against cyber attacks','A team that conducts security audits','A team that optimizes internet speed'],1]
+];
+
+const rightshipQuestions = [
+['What is one of the main purposes of a RightShip inspection?',['To increase the vessel\'s cargo capacity','To assess safety and operational standards of the vessel','To calculate crew salaries','To determine the price of fuel'],1],
+['What does RISQ stand for?',['RightShip Inspection Safety Qualification','RightShip Inspection Ship Questionnaire','RightShip International Safety Questionnaire','RightShip Inspection Survey Quality'],1],
+['Which of the following is an important area covered during a RightShip inspection?',['Crew entertainment','Navigation','Passenger ticketing','Food pricing'],1],
+['What should the vessel crew do before a RightShip inspection?',['Hide previous inspection records','Prepare the vessel and relevant documentation','Stop all machinery','Remove safety equipment from the vessel'],1],
+['Why is proper preparation important before an inspection?',['It can help reduce the time required for the inspection','It eliminates the need for an inspector','It allows the vessel to avoid documentation','It increases the vessel\'s speed'],0],
+['Which of the following is an example of objective evidence during an inspection?',['A crew member\'s personal opinion','A demonstrated task performed by the crew','A guess made by the inspector','An informal conversation only'],1],
+['What should an inspector\'s findings primarily be based on?',['Personal feelings','Assumptions','Facts and observations','Rumours from other vessels'],2],
+['Which document is particularly important for a RightShip inspection?',['Ship\'s inspection questionnaire','Restaurant menu','Crew recreation schedule','Passenger booking list'],0],
+['Which of the following is included in the RISQ?',['Navigation','Crew holiday planning','Hotel accommodation','Airline schedules'],0],
+['Which area relates directly to preventing pollution from ships?',['Pollution prevention and control','Crew recreation','Catering management','Passenger services'],0],
+['Which of the following can be inspected under the machinery section?',['Machinery-space condition and equipment','Crew uniforms only','Cargo prices','Port advertisements'],0],
+['Why are ship inspections important for the maritime industry?',['They help protect life, property and the environment','They increase the number of containers carried','They replace the ship\'s crew','They eliminate the need for maintenance'],0],
+['Which of the following is an important part of safe navigation?',['Proper use of navigational equipment','Ignoring weather information','Avoiding passage planning','Switching off bridge equipment'],0],
+['What should an inspector do if a finding is unclear or potentially ambiguous?',['Ignore it','Clarify it using appropriate evidence and references','Automatically mark it as satisfactory','Ask another vessel to answer it'],1],
+['Which of the following is a category covered by the RightShip inspection questionnaire?',['Mooring operations','Crew recreation','Shipboard tourism','Passenger entertainment'],0],
+['Why is crew familiarity with shipboard procedures important during an inspection?',['It can be demonstrated as evidence of effective operation','It reduces the ship\'s fuel consumption automatically','It removes the need for safety equipment','It replaces written procedures'],0],
+['What is the purpose of maintaining accurate shipboard records?',['To provide evidence of compliance and proper operation','To increase cargo quantity','To reduce the number of crew members','To avoid maintenance'],0],
+['Which of the following is associated with bulk carrier inspections?',['Cargo operations','Airline operations','Hotel management','Passenger ticketing'],0],
+['Why should the crew be familiar with the vessel\'s procedures before an inspection?',['They may be required to explain or demonstrate procedures','They can avoid all inspections','They can change the inspection questionnaire','They can cancel the inspection'],0],
+['What should happen when an inspection finding contains negative elements?',['The finding should be accurately recorded','The finding should always be changed to "Yes"','The finding should be deleted','The inspector should ignore it'],0],
+['Which of the following is associated with environmental protection during ship operations?',['Pollution prevention','Crew recreation','Cabin decoration','Cargo marketing'],0],
+['What type of information can real-time safety technology provide on the bridge?',['Safety and risk information','Crew salary information','Food menus','Passenger ticket prices'],0],
+['RightShip Safety Score can be integrated into which type of system according to the real-time safety video?',['Navigation platform','Catering system','Payroll system','Entertainment system'],0],
+['How can real-time safety information assist a vessel\'s bridge team?',['By supporting risk assessment and decision-making','By replacing the Master','By eliminating the need for navigation','By controlling crew salaries'],0],
+['Which of the following can be considered during route planning using safety information?',['Vessel and route-related risks','Crew entertainment preferences','Food quantities','Cabin decoration'],0],
+['Which of the following is an important area for a bulk carrier?',['Cargo operations','Passenger ticketing','Hotel services','Airport operations'],0],
+['What should the inspector avoid when preparing inspection findings?',['Facts and observations','Objective evidence','Personal assumptions and unsupported opinions','Valid industry references'],2],
+['Which of the following is part of the general information collected during a RightShip inspection?',['Vessel\'s IMO number','Captain\'s favourite food','Crew members\' personal hobbies','Port shopping list'],0],
+['Which of the following areas is included in the RISQ?',['Health and welfare of seafarers','Passenger entertainment','Airline operations','Hotel reservations'],0],
+['What is the overall objective of preparing properly for a RightShip inspection?',['To demonstrate that the vessel is operated safely and in accordance with applicable requirements and good practices','To avoid all maintenance work','To increase the vessel\'s cargo capacity','To reduce the number of crew members'],0]
+];
+
+function getCurrentQuestions(){
+  if(currentCourseId === 'rightship'){
+    return rightshipQuestions;
+  }
+
+  return cyberQuestions;
+}
+
+function openAssessment(){
+  const questions = getCurrentQuestions();
+
+  document.getElementById('assessmentTitle').textContent =
+    (courses.find(course=>course.id === currentCourseId)?.name || 'Course')+
+    ' - Final Assessment';
+
+  const wrap = document.getElementById('quizQuestions');
+  wrap.innerHTML = '';
+
+  questions.forEach((question,index)=>{
+    const box = document.createElement('div');
+    box.className = 'question';
+
+    const paragraph = document.createElement('p');
+    paragraph.textContent = (index+1)+'. '+question[0]+' (Optional)';
+    box.appendChild(paragraph);
+
+    question[1].forEach((option,indexOption)=>{
+      const label = document.createElement('label');
+      label.className = 'option';
+
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'q'+index;
+      radio.value = indexOption;
+      radio.required = false;
+
+      const span = document.createElement('span');
+      span.textContent = option;
+
+      label.appendChild(radio);
+      label.appendChild(span);
+      box.appendChild(label);
+    });
+
+    wrap.appendChild(box);
+  });
+
+  showPage('assessmentPage');
+}
+
+function skipAssessmentDemo(){
+  const questions = getCurrentQuestions();
+
+  document.getElementById('resultTitle').textContent =
+    'Demo Completed (Assessment Skipped)';
+
+  document.getElementById('resultContent').textContent =
+    'Seafarer: '+(registration.fullName || 'Demo user')+
+    ' | Course: '+(courses.find(course=>course.id === currentCourseId)?.name || '')+
+    ' | Total Questions: '+questions.length+
+    ' | Status: DEMO MODE - Assessment skipped.';
+
+  document.getElementById('retakeBtn').textContent =
+    '↻ Try Assessment (Optional)';
+
+  showPage('resultPage');
+}
+
+document.getElementById('quizForm').addEventListener('submit',function(event){
+  event.preventDefault();
+
+  const questions = getCurrentQuestions();
+  let score = 0;
+
+  questions.forEach(function(question,index){
+    const answer = document.querySelector(
+      'input[name="q'+index+'"]:checked'
+    );
+
+    if(answer && Number(answer.value) === question[2]){
+      score++;
+    }
+  });
+
+  const passed = score >= Math.ceil(questions.length * 0.7);
+
+  const resultTitle = document.getElementById('resultTitle');
+  const resultContent = document.getElementById('resultContent');
+  const retakeBtn = document.getElementById('retakeBtn');
+
+  if(passed){
+    resultTitle.textContent = 'Assessment Passed!';
+
+    resultContent.textContent =
+      'Seafarer: '+(registration.fullName || 'Demo user')+
+      ' | Course: '+
+      (courses.find(function(course){
+        return course.id === currentCourseId;
+      })?.name || '')+
+      ' | Score: '+score+'/'+questions.length+
+      ' | Status: PASSED';
+
+    try{
+      localStorage.setItem(
+        'bellfranc_demo_last_result',
+        JSON.stringify({
+          registration:registration,
+          course:currentCourseId,
+          score:score,
+          totalQuestions:questions.length,
+          passed:true,
+          date:new Date().toISOString()
+        })
+      );
+    }catch(err){
+      console.warn('Result could not be saved.',err);
+    }
+
+    retakeBtn.textContent = '↻ Try Assessment Again';
+  }else{
+    resultTitle.textContent = 'Assessment Not Passed';
+
+    resultContent.textContent =
+      'Your score is '+score+'/'+questions.length+
+      ' ('+Math.round(score/questions.length*100)+
+      '%). You need at least 70% to pass. Please try again.';
+
+    retakeBtn.textContent = '↻ Retake Assessment';
+  }
+
+  showPage('resultPage');
+});
+
+function renderManage(){
+  const wrap = document.getElementById('manageCourses');
+  wrap.innerHTML = '';
+
+  courses.forEach((course,courseIndex)=>{
+    const box = document.createElement('div');
+    box.className = 'module-edit';
+
+    const name = document.createElement('input');
+    name.value = course.name;
+    name.setAttribute('aria-label','Course name');
+
+    const description = document.createElement('input');
+    description.value = course.description || '';
+    description.placeholder = 'Course description';
+    description.style.marginTop = '10px';
+
+    const save = document.createElement('button');
+    save.type = 'button';
+    save.className = 'btn';
+    save.textContent = 'Save Course Name / Description';
+
+    save.onclick = ()=>{
+      course.name = name.value.trim() || course.name;
+      course.description = description.value.trim();
+
+      if(saveCourses()){
+        renderManage();
+        renderCourses();
+      }
+    };
+
+    const deleteButton = document.createElement('button');
+    deleteButton.type = 'button';
+    deleteButton.className = 'btn btn-danger';
+    deleteButton.textContent = 'Delete Course';
+
+    deleteButton.onclick = ()=>{
+      if(confirm('Delete '+course.name+'?')){
+        courses = courses.filter(item=>item.id !== course.id);
+
+        if(currentCourseId === course.id){
+          currentCourseId = null;
         }
 
-        function finishIntro() {
-            document.getElementById('step-intro').classList.add('hidden');
-            document.getElementById('step-registration').classList.remove('hidden');
+        if(saveCourses()){
+          renderManage();
+          renderCourses();
         }
+      }
+    };
 
-        const driveVideos = {
-            'Cyber Security': [
-                "https://drive.google.com/file/d/1dES7G6RNz7aRZQSoFMLtVBqxEtvoFBbh/preview",
-                "https://drive.google.com/file/d/1hAhTBhrN95-UsHA-XpLrw8MQp85PREEF/preview",
-                "https://drive.google.com/file/d/1JzpeToh7nByjIWsR1vzN64Yo9eRcQWzn/preview",
-                "https://drive.google.com/file/d/1cNtLFxZQnwDWXqkpN1xCBCJySYRryDLV/preview",
-                "https://drive.google.com/file/d/16t5tG2c3Xt8Et6jToJ7PXFTvufxJGxHJ/preview",
-                "https://drive.google.com/file/d/1P4KcLF_PRWCyDAQ7MEaGNiFsaIURlGcx/preview",
-                "https://drive.google.com/file/d/1wwsMwNC1Xym0iigRJ8wAr9YgyS_Jt74y/preview"
-            ],
-            'Rightship Inspection': [
-                "https://drive.google.com/file/d/1nEL8Z86VSEMLlYLGU_5WVuA-s6RLJ7IU/preview",
-                "https://drive.google.com/file/d/1a_h1c-EzaD6MxVhf9t8xww9SoU1XHMs8/preview",
-                "https://drive.google.com/file/d/1AZJTuhkL5KWeiib3Lk3eDPIDFGhd4hkI/preview",
-                "https://drive.google.com/file/d/1L-FpGr4MFe4fPxp5mAAJCUnPbe3E7Y9g/preview",
-                "https://drive.google.com/file/d/1ZuclJFfmbQyLoiAUSK3fy9pOXpoyPFVP/preview",
-                "https://drive.google.com/file/d/1xXUOUfptqxJUIncKZAz69GPjUbkmnqcY/preview"
-            ]
-        };
+    const moduleHeading = document.createElement('h3');
+    moduleHeading.textContent = 'Modules for '+course.name;
 
-        const driveGuidelines = {
-            'Cyber Security': "https://drive.google.com/file/d/1CW2n_iA4vZiUvl7_q476CKzuKNIdsjF7/preview",
-            'Rightship Inspection': "https://drive.google.com/file/d/1dotqRuVRJuQB3ClID4gOpfoHp-Qe22VS/preview"
-        };
+    box.append(name,description,save,deleteButton,moduleHeading);
 
-        const driveAssessments = {
-            'Cyber Security': "https://docs.google.com/forms/d/e/1FAIpQLSeFQB6mBCBE6VZENsk9B7Eqx0qHVHpPl30yMCRvhZTNHJFL6A/viewform?embedded=true",
-            'Rightship Inspection': "https://forms.gle/WvdG3sTwq1KHR5Qf7"
-        };
+    course.modules.forEach((module,moduleIndex)=>{
+      const row = document.createElement('div');
+      row.className = 'module-edit';
 
-        const driveAssessmentDirectLinks = {
-            'Cyber Security': "https://docs.google.com/forms/d/e/1FAIpQLSeFQB6mBCBE6VZENsk9B7Eqx0qHVHpPl30yMCRvhZTNHJFL6A/viewform",
-            'Rightship Inspection': "https://forms.gle/WvdG3sTwq1KHR5Qf7"
-        };
+      const title = document.createElement('input');
+      title.value = module.title || '';
+      title.placeholder = 'Module title';
 
-        function handleRegistration() {
-            document.getElementById('step-registration').classList.add('hidden');
-            document.getElementById('step-course-select').classList.remove('hidden');
+      const url = document.createElement('input');
+      url.value = module.url || '';
+      url.placeholder = 'Google Drive video preview URL';
+      url.style.marginTop = '9px';
+
+      const saveModule = document.createElement('button');
+      saveModule.type = 'button';
+      saveModule.className = 'btn';
+      saveModule.textContent = 'Save Module';
+
+      saveModule.onclick = ()=>{
+        module.title = title.value.trim() || 'Video '+(moduleIndex+1);
+        module.url = url.value.trim();
+
+        if(saveCourses()){
+          renderManage();
         }
+      };
 
-        function selectCourse(courseName) {
-            selectedCourse = courseName;
-            
-            // Reset completion tracking when course is selected
-            const totalVideos = driveVideos[selectedCourse].length;
-            completedVideos = new Array(totalVideos).fill(false);
-            guidelinesCompleted = false;
+      const deleteModule = document.createElement('button');
+      deleteModule.type = 'button';
+      deleteModule.className = 'btn btn-danger';
+      deleteModule.textContent = 'Delete Module';
 
-            document.getElementById('step-course-select').classList.add('hidden');
-            showCourseHub();
+      deleteModule.onclick = ()=>{
+        course.modules.splice(moduleIndex,1);
+
+        if(saveCourses()){
+          renderManage();
         }
+      };
 
-        function backToCourseSelect() {
-            document.getElementById('step-course-hub').classList.add('hidden');
-            document.getElementById('step-course-select').classList.remove('hidden');
+      row.append(title,url,saveModule,deleteModule);
+      box.appendChild(row);
+    });
+
+    const addTitle = document.createElement('input');
+    addTitle.placeholder = 'New module title';
+
+    const addUrl = document.createElement('input');
+    addUrl.placeholder = 'Video URL';
+    addUrl.style.marginTop = '9px';
+
+    const add = document.createElement('button');
+    add.type = 'button';
+    add.className = 'btn btn-secondary';
+    add.textContent = '+ Add Module';
+
+    add.onclick = ()=>{
+      if(!addTitle.value.trim()){
+        alert('Enter a module title first.');
+        return;
+      }
+
+      course.modules.push({
+        title:addTitle.value.trim(),
+        url:addUrl.value.trim(),
+        type:'video'
+      });
+
+      if(saveCourses()){
+        renderManage();
+      }
+    };
+
+    box.append(addTitle,addUrl,add);
+
+    const guidelines = document.createElement('input');
+    guidelines.value = course.guidelines || '';
+    guidelines.placeholder = 'Guidelines PDF preview URL';
+    guidelines.style.marginTop = '12px';
+
+    const saveGuidelines = document.createElement('button');
+    saveGuidelines.type = 'button';
+    saveGuidelines.className = 'btn btn-secondary';
+    saveGuidelines.textContent = 'Save Guidelines URL';
+
+    saveGuidelines.onclick = ()=>{
+      course.guidelines = guidelines.value.trim();
+
+      if(saveCourses()){
+        alert('Guidelines link saved.');
+      }
+    };
+
+    box.append(guidelines,saveGuidelines);
+    wrap.appendChild(box);
+  });
+}
+
+function addCourse(){
+  const name = document.getElementById('newCourseName').value.trim();
+
+  if(!name){
+    alert('Enter a course name.');
+    return;
+  }
+
+  courses.push({
+    id:'course_'+Date.now(),
+    name:name,
+    description:'Training modules + guidelines document',
+    guidelines:'',
+    modules:[]
+  });
+
+  if(saveCourses()){
+    document.getElementById('newCourseName').value = '';
+    renderManage();
+    renderCourses();
+  }
+}
+
+function exportBackup(){
+  const blob = new Blob(
+    [JSON.stringify(courses,null,2)],
+    {type:'application/json'}
+  );
+
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+
+  anchor.href = url;
+  anchor.download = 'bellfranc-course-backup.json';
+
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+
+  window.setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function importBackup(){
+  const file = document.getElementById('importFile').files[0];
+
+  if(!file){
+    alert('Choose a JSON backup file first.');
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = ()=>{
+    try{
+      const parsed = JSON.parse(reader.result);
+
+      if(!Array.isArray(parsed) || !parsed.every(isValidCourse)){
+        throw Error('Backup must be a list of valid courses. Each course needs an id, name, and modules array.');
+      }
+
+      const ids = parsed.map(course=>course.id);
+
+      if(new Set(ids).size !== ids.length){
+        throw Error('Each course must have a unique id.');
+      }
+
+      courses = parsed;
+
+      if(saveCourses()){
+        renderManage();
+        renderCourses();
+        alert('Backup imported.');
+      }
+    }catch(err){
+      alert('Could not import backup: '+err.message);
+    }
+  };
+
+  reader.readAsText(file);
+}
+
+function init(){
+  renderCourses();
+
+  // Video completion ticks reset whenever the page is refreshed.
+  completed = {};
+
+  // Restore registration details without restoring video completion ticks.
+  try{
+    const savedRegistration = JSON.parse(
+      localStorage.getItem('bellfranc_demo_registration') || 'null'
+    );
+
+    if(savedRegistration && typeof savedRegistration === 'object'){
+      registration = savedRegistration;
+
+      ['fullName','passportNo','dob','indosNo','cdcNo','rank'].forEach(key=>{
+        const field = document.getElementById(key);
+
+        if(field && savedRegistration[key] != null){
+          field.value = savedRegistration[key];
         }
+      });
+    }
+  }catch(err){
+    console.warn('Registration details could not be restored.',err);
+  }
+}
 
-        function showCourseHub() {
-            document.getElementById('hubTitle').innerText = `${selectedCourse} - Content Menu`;
-            const hubList = document.getElementById('hubList');
-            hubList.innerHTML = '';
+document.getElementById('seafarerPhoto').addEventListener('change',function(event){
+  const file = event.target.files[0];
+  const preview = document.getElementById('photoPreview');
 
-            // Generate Video Buttons
-            const playlist = driveVideos[selectedCourse];
-            playlist.forEach((url, index) => {
-                const isDone = completedVideos[index];
+  if(file && file.type.startsWith('image/')){
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = 'block';
+  }else{
+    preview.src = '';
+    preview.style.display = 'none';
+  }
+});
 
-                const btn = document.createElement('button');
-                btn.className = 'hub-item';
-                btn.innerText = isDone ? `✅ Video ${index + 1} (Completed)` : `▶ Play Video ${index + 1}`;
-                
-                // Color green if completed
-                if (isDone) {
-                    btn.style.backgroundColor = '#166534';
-                    btn.style.borderColor = '#15803d';
-                }
+init();
+</script>
 
-                btn.onclick = () => loadVideo(index);
-                hubList.appendChild(btn);
-            });
-
-            // Generate Guidelines Button
-            const guideBtn = document.createElement('button');
-            guideBtn.className = 'hub-item guidelines-item';
-            guideBtn.innerText = guidelinesCompleted ? `✅ Guidelines Document (Completed)` : `📄 Read Guidelines Document`;
-            
-            // Color green if completed
-            if (guidelinesCompleted) {
-                guideBtn.style.backgroundColor = '#166534';
-                guideBtn.style.borderColor = '#15803d';
-            }
-
-            guideBtn.onclick = () => openGuidelines();
-            hubList.appendChild(guideBtn);
-
-            // DEMO OVERRIDE: Assessment Button is ALWAYS active and unlocked
-            const proceedBtn = document.getElementById('proceedAssessmentBtn');
-            proceedBtn.disabled = false;
-            proceedBtn.innerText = "Proceed to Final Assessment →";
-            proceedBtn.style.backgroundColor = "#0284c7";
-
-            document.getElementById('step-course-hub').classList.remove('hidden');
-        }
-
-        function backToHub() {
-            // Stop timers if user navigates back early
-            if (timerInterval) clearInterval(timerInterval);
-            if (guidelinesTimer) clearInterval(guidelinesTimer);
-
-            // Stop iframes from playing in background
-            document.getElementById('driveFrame').src = '';
-            document.getElementById('guidelinesFrame').src = '';
-
-            document.getElementById('step-videos').classList.add('hidden');
-            document.getElementById('step-guidelines').classList.add('hidden');
-            
-            // Re-render hub to update checkmarks
-            showCourseHub(); 
-        }
-
-        function loadVideo(index) {
-            currentPlayingIndex = index;
-            document.getElementById('step-course-hub').classList.add('hidden');
-            document.getElementById('step-videos').classList.remove('hidden');
-
-            const playlist = driveVideos[selectedCourse];
-
-            document.getElementById('videoTitle').innerText = `Video ${index + 1} - ${selectedCourse}`;
-            document.getElementById('driveFrame').src = playlist[index];
-
-            const btn = document.getElementById('videoDoneBtn');
-            
-            // DEMO OVERRIDE: Instant unlock for videos
-            completedVideos[currentPlayingIndex] = true; 
-            btn.disabled = false;
-            btn.innerText = "Video Complete → Back to Menu";
-        }
-
-        function openGuidelines() {
-            document.getElementById('step-course-hub').classList.add('hidden');
-            document.getElementById('guidelinesFrame').src = driveGuidelines[selectedCourse];
-            document.getElementById('step-guidelines').classList.remove('hidden');
-            
-            startGuidelinesTimer();
-        }
-
-        function startGuidelinesTimer() {
-            const btn = document.getElementById('guidelinesBtn');
-            
-            // DEMO OVERRIDE: Instant unlock for guidelines
-            guidelinesCompleted = true;
-            btn.disabled = false;
-            btn.innerText = "Guidelines Completed → Back to Menu";
-        }
-
-        function unlockAssessment() {
-            document.getElementById('step-course-hub').classList.add('hidden');
-            
-            document.getElementById('assessmentTitle').innerText = `${selectedCourse} - Final Assessment`;
-            document.getElementById('assessmentFrame').src = driveAssessments[selectedCourse];
-            document.getElementById('assessmentFallbackLink').href = driveAssessmentDirectLinks[selectedCourse];
-            
-            document.getElementById('step-assessment').classList.remove('hidden');
-        }
-
-        // NEW: Show the dedicated fail page
-        function handleFail() {
-            document.getElementById('step-assessment').classList.add('hidden');
-            document.getElementById('step-retake').classList.remove('hidden');
-        }
-
-        // NEW: Reload form from the Retake page
-        function retakeAssessment() {
-            const frame = document.getElementById('assessmentFrame');
-            frame.src = frame.src; // Reload iframe
-            
-            document.getElementById('step-retake').classList.add('hidden');
-            document.getElementById('step-assessment').classList.remove('hidden');
-            document.getElementById('step-assessment').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // NEW: Let them go back to review videos from the Retake page
-        function backToCourseHubFromRetake() {
-            document.getElementById('step-retake').classList.add('hidden');
-            document.getElementById('step-course-hub').classList.remove('hidden');
-        }
-
-        function completeTraining() {
-            // DEMO OVERRIDE: Removed 45-second assessment timer block
-            localStorage.setItem("seafarer_course_completed", "true");
-            document.getElementById('step-assessment').classList.add('hidden');
-            document.getElementById('step-complete').classList.remove('hidden');
-        }
-    </script>
 </body>
 </html>
