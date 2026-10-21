@@ -65,6 +65,22 @@ body{padding:12px}
 }
 #retakeBtn{background:red!important;background-color:red!important;color:white!important;border:none!important}
 </style>
+
+<style>
+  #companyFooter {
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 24px;
+    padding: 20px 12px;
+    text-align: center;
+    color: #c8d8ea;
+    background: #061426;
+    border-top: 2px solid #142b45;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+</style>
+
 </head>
 
 <body>
@@ -216,9 +232,9 @@ body{padding:12px}
   <button class="btn btn-back" type="button" onclick="backToHub()">← Back to Content Menu</button>
   <h2 id="assessmentTitle">Final Assessment</h2>
   <p>Please complete the assessment below. You must score at least 70% to pass, i.e. 21/30.</p>
-  <form id="quizForm">
+  <form id="quizForm" onsubmit="submitAssessment(event)">
     <div id="quizQuestions"></div>
-    <button class="btn" type="submit">Submit Assessment</button>
+    <button class="btn" type="button" onclick="submitAssessment(event)">Submit Assessment</button>
   </form>
 </section>
 
@@ -230,8 +246,8 @@ body{padding:12px}
     ↻ Try Assessment Again
   </button>
 
-  <button class="btn btn-secondary" type="button" onclick="showPage('courseSelectPage')">
-    Back to Course Selection
+  <button class="btn btn-secondary" type="button" onclick="backToHub()">
+    ← Retake Assessment After reviewing the course material
   </button>
 </section>
 
@@ -700,7 +716,7 @@ function skipAssessmentDemo(){
   showPage('resultPage');
 }
 
-document.getElementById('quizForm').addEventListener('submit',function(event){
+function submitAssessment(event){
   event.preventDefault();
 
   const questions = getCurrentQuestions();
@@ -763,7 +779,7 @@ document.getElementById('quizForm').addEventListener('submit',function(event){
   }
 
   showPage('resultPage');
-});
+}
 
 function renderManage(){
   const wrap = document.getElementById('manageCourses');
@@ -1044,6 +1060,9 @@ document.getElementById('seafarerPhoto').addEventListener('change',function(even
 
 init();
 </script>
+
+
+<footer id="companyFooter">BELLFRANC A.S. LTD. PVT. | Seafarer Training Portal</footer>
 
 </body>
 </html>
